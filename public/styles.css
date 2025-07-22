@@ -1,0 +1,32 @@
+/* Estilos adicionales específicos de páginas */
+.highlight {
+  background-color: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 5px;
+  padding: 15px;
+  margin: 20px 0;
+}
+
+.code-example {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 5px;
+  padding: 15px;
+  font-family: 'Courier New', monospace;
+  overflow-x: auto;
+}
+
+.button-primary {
+  background: #007cba;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.button-primary:hover {
+  background: #005a87;
+}

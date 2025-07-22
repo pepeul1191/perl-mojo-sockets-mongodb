@@ -5,7 +5,13 @@ use Mojolicious::Lite;
 # Ruta principal
 get '/' => sub {
     my $c = shift;
-    $c->render('index');
+    $c->render('site/index');
+};
+
+get '/welcome' => sub {
+    my $c = shift;
+    my $name = $c->param('name') || 'Invitado';
+    $c->render('site/welcome', name => $name, title => 'Bienvenido');
 };
 
 # API de ejemplo
@@ -16,25 +22,3 @@ get '/api/hello' => sub {
 
 # Iniciar aplicación
 app->start;
-
-__DATA__
-
-@@ index.html.ep
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Mi App Mojolicious</title>
-    <meta charset="utf-8">
-    <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        .container { max-width: 800px; margin: 0 auto; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>¡Bienvenido a tu app Mojolicious!</h1>
-        <p>Esta es una aplicación básica creada con Mojolicious::Lite.</p>
-        <a href="/api/hello">Prueba la API</a>
-    </div>
-</body>
-</html>

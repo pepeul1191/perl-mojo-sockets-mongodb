@@ -1,0 +1,38 @@
+% layout 'default';
+% title 'Inicio';
+
+<div style="text-align: center;">
+    <h2>¡Bienvenido a tu app Mojolicious!</h2>
+    <p>Esta es una aplicación moderna con WebSockets y MongoDB.</p>
+    
+    <div style="margin: 30px 0;">
+        <form method="GET" action="/welcome" style="margin: 20px 0;">
+            <label for="name">¿Cómo te llamas?</label><br><br>
+            <input type="text" id="name" name="name" placeholder="Tu nombre" 
+                   style="padding: 10px; font-size: 16px; border: 2px solid #ddd; border-radius: 5px;">
+            <button type="submit" 
+                    style="padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                Saludar
+            </button>
+        </form>
+    </div>
+    
+    <div style="background: #f8f9fa; padding: 20px; border-radius: 5px; margin: 20px 0;">
+        <h3>Características:</h3>
+        <ul style="text-align: left; display: inline-block;">
+            <li>✅ WebSockets en tiempo real</li>
+            <li>✅ Base de datos MongoDB</li>
+            <li>✅ Autenticación JWT</li>
+            <li>✅ Frontend moderno</li>
+            <li>✅ Despliegue fácil</li>
+        </ul>
+    </div>
+    
+    <div style="margin: 30px 0;">
+        <a href="/api/hello" 
+           style="display: inline-block; padding: 15px 30px; background: #007cba; color: white; 
+                  text-decoration: none; border-radius: 5px; font-size: 18px;">
+            Probar API
+        </a>
+    </div>
+</div>

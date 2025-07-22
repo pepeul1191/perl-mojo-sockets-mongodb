@@ -1,0 +1,28 @@
+% layout 'default';
+% title 'Bienvenido ' . $name;
+
+<div style="text-align: center;">
+    <h2>¡Hola, <%= $name %>!</h2>
+    <p>Gracias por visitar nuestra aplicación.</p>
+    
+    <div style="font-size: 4em; margin: 30px 0;">👋</div>
+    
+    <div style="background: #d4edda; border: 1px solid #c3e6cb; 
+                border-radius: 5px; padding: 20px; margin: 20px 0;">
+        <p>🎉 Has sido registrado en nuestro sistema.</p>
+        <p>Tu sesión es válida por 1 hora.</p>
+    </div>
+    
+    <div style="margin: 30px 0;">
+        <a href="/" 
+           style="display: inline-block; padding: 10px 20px; background: #6c757d; color: white; 
+                  text-decoration: none; border-radius: 5px; margin: 0 10px;">
+            Volver al inicio
+        </a>
+        <a href="/api/hello" 
+           style="display: inline-block; padding: 10px 20px; background: #007cba; color: white; 
+                  text-decoration: none; border-radius: 5px; margin: 0 10px;">
+            Ver API
+        </a>
+    </div>
+</div>
