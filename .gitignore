@@ -1,0 +1,140 @@
+# ==========================
+# Perl/Mojolicious
+# ==========================
+/blib/
+/_build/
+cover_db/
+/inc/
+/.build/
+nytprof.out
+/pm_to_blib
+*.o
+*.bs
+*.c
+*.gz
+/.perlcriticrc.log
+.last_cover_stats
+MANIFEST.bak
+META.json
+META.yml
+Makefile
+Makefile.old
+MYMETA.*
+.build/
+_build/
+cover_db/
+blib/
+inc/
+pm_to_blib
+*.o
+*.bs
+*.c
+*.gz
+.last_cover_stats
+MANIFEST.bak
+META.*
+MYMETA.*
+.build/
+_build/
+cover_db/
+blib/
+inc/
+pm_to_blib
+*.o
+*.bs
+*.c
+*.gz
+.last_cover_stats
+MANIFEST.bak
+META.*
+MYMETA.*
+
+# Mojolicious specific
+/public/*.map
+/log/*.log
+/tmp/
+
+# ==========================
+# Node.js / Frontend
+# ==========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.nyc_output/
+coverage/
+.nyc_output/
+.coverage/
+*.log
+logs
+*.tgz
+.npm/
+.npmrc
+
+# ==========================
+# MongoDB
+# ==========================
+/data/db/
+mongod.lock
+*.mongodb
+
+# ==========================
+# Sistema operativo
+# ==========================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ==========================
+# IDEs y editores
+# ==========================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+
+# ==========================
+# Logs y temporales
+# ==========================
+*.log
+logs/
+tmp/
+temp/
+*.tmp
+.cache/
+
+# ==========================
+# Entornos virtuales
+# ==========================
+local/
+.env*
+!.env.example
+
+# ==========================
+# Perl Module::Build
+# ==========================
+Build
+_build/
+Build.bat
+Build.COM
+Build.exe
+Build.pl
+Build.sh
+Build.zip
+
+# ==========================
+# CPAN
+# ==========================
+.cpan/
+.cpanm/
+.carton/
+local/

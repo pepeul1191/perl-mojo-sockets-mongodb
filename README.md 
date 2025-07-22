@@ -1,0 +1,14 @@
+# Perl Mojo WebSockets + MongoDB
+
+Gestor de Dependencias
+
+    $ curl -L https://cpanmin.us | perl - App::cpanminus
+
+Dependencias
+
+    $ cpanm Mojolicious
+    $ cpanm MongoDB Mojo::JWT Test::More
+
+Arranacar la aplicación
+
+    $ morbo app.pl
