@@ -138,3 +138,5 @@ Build.zip
 .cpanm/
 .carton/
 local/
+
+public/vendor

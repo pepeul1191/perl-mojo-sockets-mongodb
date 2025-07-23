@@ -8,7 +8,11 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev-all": "concurrently --names \"MojoWS,Accesos\" -c \"bgMagenta,bgBlue\" \"morbo app.pl\" \"bash -c 'cd /home/pepe/Documentos/go/accesos && go run main.go 2>/dev/null'\""
+    "dev-all": "concurrently --names \"MojoWS,Accesos\" -c \"bgMagenta,bgBlue\" \"morbo app.pl\" \"bash -c 'cd /home/pepe/Documentos/go/accesos && go run main.go 2>/dev/null'\"",
+    "bower": "npx bower",
+    "bower-install": "npx bower install",
+    "bower-update": "npx bower update",
+    "postinstall": "npm run bower-install"
   },
   "repository": {
     "type": "git",
@@ -22,6 +26,7 @@
   },
   "homepage": "https://github.com/pepeul1191/perl-mojo-sockets-mongodb#readme",
   "devDependencies": {
-    "concurrently": "^9.2.0"
+    "concurrently": "^9.2.0",
+    "bower": "^1.8.14"
   }
 }

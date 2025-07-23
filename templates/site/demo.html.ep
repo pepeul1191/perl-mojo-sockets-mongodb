@@ -9,6 +9,14 @@
 
 % content_for 'header' => begin
   <h1>Chat Demo</h1>
+
+  <form id="uploadForm" enctype="multipart/form-data">
+    <input type="file" id="fileInput" name="file" required>
+    <button type="submit">Subir Archivo</button>
+    <div id="progress" style="display:none;">Subiendo...</div>
+  </form>
+  
+  <div id="result"></div>
 % end
 
 % content_for 'footer' => begin
@@ -16,7 +24,8 @@
 % end
 
 % content_for 'script' => begin
-  <script src="chat.js"></script>
+  <script src="/vendor/mootools/dist/mootools-core.min.js"></script>
+  <script src="/chat.js"></script>
 % end
 
 Futuro Chat

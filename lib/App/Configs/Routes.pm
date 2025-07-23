@@ -19,7 +19,7 @@ sub load_routes {
   $app->routes->post('/api/v1/sign-in')->to('Session#sign_in');
   # demo
   $app->routes->get('/demo')->to('Web#demo');
-  # ✅ Nueva ruta WebSocket
+  # Nueva ruta WebSocket
   $app->routes->websocket('/ws/chat')->to('Socket#chat');
 
   # Ruta catch-all para 404 - DEBE SER LA ÚLTIMA
