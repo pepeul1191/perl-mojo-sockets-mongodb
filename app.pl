@@ -2,17 +2,27 @@
 use Mojolicious::Lite;
 use lib 'lib';
 
-# Cargar módulo de rutas
-use App::Configs::Routes;
+# Cargar inicializadores (esto cargará .env)
+use App::Configs::Initializers;
+my $init = App::Configs::Initializers->new;
 
-# Configuración
-app->secrets(['mi_secreto_super_seguro_123']);
+# Obtener configuración
+my $app_config = $init->get_app_config;
+my $mongo_config = $init->get_mongo_config;
+
+# Debug
+say "Mongo Config: " . join(', ', %$mongo_config) if $app_config->{debug};
+
+# Configurar aplicación
+app->secrets([$app_config->{secret}]);
 app->defaults(start_time => time);
+app->mode($app_config->{debug} ? 'development' : 'production');
 
-# ⚠️ IMPORTANTE: El namespace debe coincidir con la estructura de directorios
+# Registrar namespaces
 app->routes->namespaces(['App::Controllers']);
 
-# Cargar todas las rutas
+# Cargar rutas
+use App::Configs::Routes;
 my $routes = App::Configs::Routes->new;
 $routes->load_routes(app);
 

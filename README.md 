@@ -9,6 +9,16 @@ Librería MongoDB - Perl
 
     $ sudo apt-get install libmongodb-perl
 
+Archivo .env
+
+    MONGO_HOST=localhost
+    MONGO_PORT=27017
+    MONGO_DB=tickets
+    MONGO_USER=root
+    MONGO_PASS=123
+    APP_SECRET=mi_secreto_seguro_123456
+    DEBUG=1
+
 Dependencias
 
     $ cpanm Mojolicious
