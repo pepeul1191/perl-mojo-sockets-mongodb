@@ -21,6 +21,22 @@ sub load_routes {
   $app->routes->get('/demo')->to('Web#demo');
   # ✅ Nueva ruta WebSocket
   $app->routes->websocket('/ws/chat')->to('Socket#chat');
+
+  # Ruta catch-all para 404 - DEBE SER LA ÚLTIMA
+  $app->routes->any('/*whatever' => sub {
+    my $c = shift;
+    
+    $c->render(
+      status => 404,
+      json => {
+        error => 'Not Found',
+        message => 'API endpoint not found',
+        method => $c->req->method,
+        path => $c->req->url->path,
+        timestamp => time()
+      }
+    );
+  });
 }
 
 1;
