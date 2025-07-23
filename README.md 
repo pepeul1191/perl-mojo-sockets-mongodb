@@ -24,6 +24,8 @@ Dependencias
     $ cpanm Mojolicious
     $ cpanm MongoDB Mojo::JWT 
     $ cpanm Test::More
+    $ cpanm Try::Tiny
+    $ cpanm JSON
 
 Arranacar la aplicación
 

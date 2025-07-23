@@ -6,6 +6,11 @@ sub index {
   $c->render('site/index', title => 'Inicio');
 }
 
+sub chat {
+  my $c = shift;
+  $c->render('site/chat', title => 'Inicio');
+}
+
 sub welcome {
   my $c = shift;
   my $name = $c->param('name') || 'Invitado';

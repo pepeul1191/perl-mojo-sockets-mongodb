@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= $title || 'Mi App' %> - Mi App WebSockets</title>
-    <link rel="stylesheet" href="/style.css">
+    <title><%= $title || 'Mi App' %> - WebSocket Chat</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -14,7 +13,7 @@
             min-height: 100vh;
         }
         .container {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
             background: white;
             padding: 30px;
@@ -57,19 +56,20 @@
             padding-top: 20px;
         }
         .content {
-            min-height: 300px;
+            min-height: 400px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1><%= $title || 'Mi App WebSockets' %></h1>
+            <h1><%= $title || 'WebSocket Chat App' %></h1>
         </header>
         
         <nav>
-            <%= link_to 'Inicio' => '/' %>
-            <%= link_to 'API' => '/api/v1/hello' %>
+            <%= link_to '🏠 Inicio' => '/' %>
+            <%= link_to '👥 Chat' => '/chat' %>
+            <%= link_to '📊 API' => '/api/v1/hello' %>
         </nav>
         
         <div class="content">
@@ -77,7 +77,7 @@
         </div>
         
         <footer>
-            <p>&copy; 2024 Mi App WebSockets. Hecho con Perl y ❤️</p>
+            <p>&copy; 2024 WebSocket Chat. Hecho con Perl y ❤️</p>
         </footer>
     </div>
 </body>
