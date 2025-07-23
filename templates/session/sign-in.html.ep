@@ -1,0 +1,98 @@
+% layout 'blank';
+% title 'Chat en Vivo';
+
+% content_for 'head' => begin
+<style>
+
+</style>
+% end
+
+% content_for 'header' => begin
+  <h1>Generar JWT</h1>
+% end
+
+% content_for 'footer' => begin
+  <p>&copy; 2025 Mi App</p>
+% end
+
+% content_for 'script' => begin
+<script>
+  document.getElementById('userForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    var formData = new FormData(this);
+    var data = {};
+    formData.forEach(function(value, key) {
+      // No incluir el campo disabled en los datos
+      if (key !== 'xauthtrigger') {
+        data[key] = value;
+      }
+    });
+    
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/api/v1/sign-in', true);
+    
+    // Setear las cabeceras personalizadas
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Accept', 'application/json');
+    xhr.setRequestHeader('X-Auth-Trigger', '<%= $config->{xauthtrigger} %>');
+    
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          alert('Token grabado en localStorage');
+          
+          var response = JSON.parse(xhr.responseText);
+          console.log('Respuesta completa:', response);
+          localStorage.setItem('user_info', JSON.stringify(response));
+      
+          document.getElementById("chatBtn").disabled = false;
+        } else {
+          alert('Error al actualizar el usuario');
+        }
+      }
+    };
+    
+    xhr.send(JSON.stringify(data));
+  });
+
+  document.getElementById('chatBtn').addEventListener('click', function(e) {
+    window.location.href = '/';  
+  });
+
+  document.getElementById('limpiarBtn').addEventListener('click', function(e) {
+    localStorage.clear();
+  });
+</script>
+% end
+
+<form id="userForm" action="/update" method="POST">
+  <div>
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" value="" required>
+  </div>
+  
+  <div>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" value="" required>
+  </div>
+  
+  <div>
+    <label for="userid">User ID:</label>
+    <input type="text" id="userid" name="user_id" value="" required>
+  </div>
+
+  <div>
+    <label for="systemid">System ID:</label>
+    <input type="text" id="systemid" name="system_id" value="" required>
+  </div>
+  
+  <div>
+    <label for="xauthtrigger">X-Auth-Trigger:</label>
+    <input type="text" id="xauthtrigger" name="xauthtrigger" value="<%= $config->{xauthtrigger} %>" disabled>
+  </div>
+  
+  <button type="submit">Generar Token</button>
+  <button disabled id="chatBtn">Ir al chat</button>
+  <button id="limpiarBtn">Limpiar Almacenamiento Local</button>
+</form>

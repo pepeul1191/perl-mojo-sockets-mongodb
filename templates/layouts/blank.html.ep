@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= $title || 'Mi App' %> - WebSocket Chat</title>
+  <style>
+  </style>
+  <!-- partial head -->
+  <%= content_for 'head' %>
+  <!-- end -->
+</head>
+<body>
+  <!-- partial header -->
+  <%= content_for 'header' %>
+  <!-- end -->
+  <!-- partial content -->
+  <%= content %>
+  <!-- end -->
+  <!-- partial script -->
+  <%= content_for 'script' %>
+  <!-- end -->
+</body>
+</html>

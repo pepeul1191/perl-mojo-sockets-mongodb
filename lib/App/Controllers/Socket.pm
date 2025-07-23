@@ -27,7 +27,7 @@ sub chat {
       $data = decode_json($msg);
     };
     
-    if ($@) {
+    if ($@) { 
       $c->app->log->error("Error parseando JSON: $@ - Mensaje: $msg");
       # Error al parsear JSON
       $c->send({json => {type => 'error', message => 'Mensaje inválido: ' . $@}});

@@ -30,3 +30,13 @@ Dependencias
 Arranacar la aplicación
 
     $ morbo app.pl
+
+Print en consola:
+
+    $c->app->log->debug(STR);
+
+Dump de variables:
+
+    use Mojo::JSON qw(encode_json);
+
+    $c->app->log->debug("Config data: " . encode_json($config));

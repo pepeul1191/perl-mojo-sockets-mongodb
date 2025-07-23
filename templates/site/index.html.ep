@@ -36,3 +36,8 @@
         </a>
     </div>
 </div>
+
+<script>
+  var userInfo = localStorage.getItem('user_info');
+  console.log(JSON.parse(userInfo))
+</script>
