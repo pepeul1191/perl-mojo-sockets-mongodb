@@ -4,10 +4,16 @@ Gestor de Dependencias
 
     $ curl -L https://cpanmin.us | perl - App::cpanminus
 
+
+Librería MongoDB - Perl
+
+    $ sudo apt-get install libmongodb-perl
+
 Dependencias
 
     $ cpanm Mojolicious
-    $ cpanm MongoDB Mojo::JWT Test::More
+    $ cpanm MongoDB Mojo::JWT 
+    $ cpanm Test::More
 
 Arranacar la aplicación
 
