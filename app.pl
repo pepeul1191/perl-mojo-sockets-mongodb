@@ -1,24 +1,20 @@
 #!/usr/bin/env perl
-use Mojo::Base -strict;
 use Mojolicious::Lite;
+use lib 'lib';
 
-# Ruta principal
-get '/' => sub {
-    my $c = shift;
-    $c->render('site/index');
-};
+# Cargar módulo de rutas
+use App::Configs::Routes;
 
-get '/welcome' => sub {
-    my $c = shift;
-    my $name = $c->param('name') || 'Invitado';
-    $c->render('site/welcome', name => $name, title => 'Bienvenido');
-};
+# Configuración
+app->secrets(['mi_secreto_super_seguro_123']);
+app->defaults(start_time => time);
 
-# API de ejemplo
-get '/api/hello' => sub {
-    my $c = shift;
-    $c->render(json => {message => 'Hola desde Perl!'});
-};
+# ⚠️ IMPORTANTE: El namespace debe coincidir con la estructura de directorios
+app->routes->namespaces(['App::Controllers']);
+
+# Cargar todas las rutas
+my $routes = App::Configs::Routes->new;
+$routes->load_routes(app);
 
 # Iniciar aplicación
 app->start;
