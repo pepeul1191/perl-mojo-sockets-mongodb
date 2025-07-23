@@ -1,0 +1,27 @@
+{
+  "name": "mojows",
+  "version": "1.0.0",
+  "description": "Gestor de Dependencias",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev-all": "concurrently --names \"MojoWS,Accesos\" -c \"bgMagenta,bgBlue\" \"morbo app.pl\" \"bash -c 'cd /home/pepe/Documentos/go/accesos && go run main.go 2>/dev/null'\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pepeul1191/perl-mojo-sockets-mongodb.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pepeul1191/perl-mojo-sockets-mongodb/issues"
+  },
+  "homepage": "https://github.com/pepeul1191/perl-mojo-sockets-mongodb#readme",
+  "devDependencies": {
+    "concurrently": "^9.2.0"
+  }
+}

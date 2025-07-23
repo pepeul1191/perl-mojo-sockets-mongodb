@@ -16,6 +16,27 @@ sub login {
 
 sub sign_in {
   my $c = shift;
+
+  # Verificar que exista la cabecera X-Auth-Trigger
+  my $init = App::Configs::Initializers->new;
+  my $config = $init->get_app_config;  # Esto ya es el hash {app}
+  my $auth_trigger = $c->req->headers->header('X-Auth-Trigger');
+  
+  # Verificar si la cabecera existe
+  unless ($auth_trigger) {
+    $c->render(json => { 
+      error => 'Missing X-Auth-Trigger header' 
+    }, status => 400);
+    return;
+  }
+
+  # Comparar directamente con $config->{xauthtrigger}
+  unless ($auth_trigger eq $config->{xauthtrigger}) {
+    $c->render(json => { 
+      error => 'Invalid X-Auth-Trigger value' 
+    }, status => 401);
+    return;
+  }
   
   # Obtener los datos
   my $data;

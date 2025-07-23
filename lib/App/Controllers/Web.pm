@@ -17,4 +17,9 @@ sub welcome {
   $c->render('site/welcome', name => $name, title => 'Bienvenido');
 }
 
+sub demo {
+  my $c = shift;
+  $c->render('site/demo', title => 'Inicio');
+}
+
 1;

@@ -1,5 +1,6 @@
 package App::Configs::Initializers;
 use Mojo::Base -base;
+use Cwd;
 
 my $loaded = 0;
 my $instance;
@@ -10,11 +11,18 @@ sub new {
   # Singleton: devolver la misma instancia
   return $instance if $instance;
   
+  # Debug para ver directorio actual
+  warn "Current directory: " . getcwd() . "\n";
+  warn "Looking for .env file...\n";
+  
   # Cargar .env solo una vez y de forma segura
   unless ($loaded) {
     $class->_load_env();
     $loaded = 1;
   }
+  
+  # Debug para ver qué hay en ENV después de cargar
+  warn "After loading - JWT_SECRET: " . ($ENV{JWT_SECRET} // 'NOT SET') . "\n";
   
   my $self = bless {
     mongo => {
@@ -25,9 +33,12 @@ sub new {
     app => {
       secret => $ENV{APP_SECRET} // 'default_secret_' . time,
       debug  => $ENV{DEBUG} // 0,
-      xauthtrigger  => $ENV{JWT_SECRET} // 0
+      xauthtrigger  => $ENV{JWT_SECRET} // 'default_trigger'
     }
   }, $class;
+  
+  # Debug para ver qué se cargó en el objeto
+  warn "Object xauthtrigger: " . ($self->{app}->{xauthtrigger}) . "\n";
   
   $instance = $self;
   return $self;
@@ -37,26 +48,26 @@ sub _load_env {
   my $class = shift;
   
   # Verificar si el archivo .env existe
-  return unless -f '.env';
-  
-  # Intentar cargar con Dotenv
-  eval {
-    require Dotenv;
-    Dotenv::load();
-    warn "✓ Variables de entorno cargadas desde .env\n" if $ENV{DEBUG};
-  };
-  
-  # Si falla Dotenv, cargar manualmente
-  if ($@) {
-    warn "⚠️ Dotenv falló: $@ - intentando carga manual\n" if $ENV{DEBUG};
-    $class->_load_env_manual();
+  unless (-f '.env') {
+    warn "⚠️ Archivo .env NO encontrado\n";
+    return;
   }
+  
+  warn "✅ Archivo .env encontrado\n";
+  
+  # Cargar manualmente siempre (método más confiable)
+  $class->_load_env_manual();
 }
 
 sub _load_env_manual {
   my $class = shift;
   
-  open my $fh, '<', '.env' or return;
+  open my $fh, '<', '.env' or do {
+    warn "⚠️ No se pudo abrir .env: $!\n";
+    return;
+  };
+  
+  warn "✅ Leyendo variables de .env:\n";
   
   while (my $line = <$fh>) {
     chomp $line;
@@ -68,13 +79,18 @@ sub _load_env_manual {
       
       # Limpiar valor
       $value =~ s/^["']|["']$//g;  # Quitar comillas
-      $value =~ s/^://g;           # Quitar : al inicio si existe
+      $value =~ s/^\s+|\s+$//g;    # Quitar espacios al inicio y final
       
+      warn "  $key = $value\n";
       $ENV{$key} = $value;
     }
   }
   
   close $fh;
+  warn "✅ Variables de entorno cargadas manualmente\n";
+  
+  # Verificar que se cargó JWT_SECRET
+  warn "JWT_SECRET loaded: " . ($ENV{JWT_SECRET} // 'STILL NOT SET') . "\n";
 }
 
 sub get_mongo_config { shift->{mongo} }
