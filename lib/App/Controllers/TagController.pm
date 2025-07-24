@@ -1,4 +1,4 @@
-package App::Controllers::Tag;
+package App::Controllers::TagController;
 use Mojo::Base 'Mojolicious::Controller';
 use App::Models::Tag;
 

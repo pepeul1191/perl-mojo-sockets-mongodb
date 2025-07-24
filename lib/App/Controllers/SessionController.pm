@@ -1,4 +1,4 @@
-package App::Controllers::Session;
+package App::Controllers::SessionController;
 use Mojo::Base 'Mojolicious::Controller';
 use Mojo::JSON qw(encode_json);
 use Mojo::JWT;

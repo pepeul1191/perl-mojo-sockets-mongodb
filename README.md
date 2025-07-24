@@ -7,7 +7,7 @@ Gestor de Dependencias
 
 Librería MongoDB - Perl
 
-    $ sudo apt-get install libmongodb-perl
+    $ sudo apt-get install libmongodb-perl libdatetime-perl
 
 Archivo .env
 
@@ -21,11 +21,7 @@ Archivo .env
 
 Dependencias
 
-    $ cpanm Mojolicious
-    $ cpanm MongoDB Mojo::JWT 
-    $ cpanm Test::More
-    $ cpanm Try::Tiny
-    $ cpanm JSON
+    $ cpanm Mojolicious MongoDB Mojo::JWT  Test::More Try::Tiny JSON DateTime
 
 Arranacar la aplicación
 

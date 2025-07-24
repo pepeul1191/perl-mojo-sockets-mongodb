@@ -1,7 +1,9 @@
-package App::Controllers::Socket;
+package App::Controllers::SocketController;
 use Mojo::Base 'Mojolicious::Controller';
 use JSON qw(decode_json encode_json);
+use App::Helpers::SocketHelper;
 use App::Models::Tag;
+use App::Models::Conversation;
 use Mojo::JWT;
 
 sub demo {
@@ -50,10 +52,8 @@ sub demo {
       
       # Enviar a todos los clientes conectados (broadcast)
       $c->app->broadcast_message($response);
-      
       # Confirmación al remitente
       $c->send({json => {type => 'ack', message => 'Mensaje recibido'}});
-        
     } elsif ($data->{type} eq 'ping') {
       # Responder a ping
       $c->send({json => {type => 'pong', timestamp => time}});
@@ -110,6 +110,9 @@ sub chat {
     $c->tx->finish(4002, 'Token expired');
     return;
   }
+
+  # helper
+  my $helper = App::Helpers::SocketHelper->new;
   
   # Token válido, aceptar la conexión
   $c->app->log->debug("WebSocket connection accepted for user: $claims->{username}");
@@ -122,8 +125,10 @@ sub chat {
     # Procesar el mensaje
     eval {
       my $data = Mojo::JSON::decode_json($msg);
+      my $conversation_model = App::Models::Conversation->new;
       # ... procesar el mensaje ...
       # Procesar diferentes tipos de mensajes
+
       if ($data->{type} eq 'message') {
         # Reenviar el mensaje a todos los clientes conectados
         my $response = {
@@ -134,6 +139,10 @@ sub chat {
         };      
         # Confirmación al remitente
         $c->send({json => {type => 'ack', message => 'Mensaje recibido'}});
+      } elsif ($data->{type} eq 'load_conversation') {
+        # logica en un helper
+        my $message = $helper->load_conversation($claims->{user_id}, $data->{recipient_id}, $conversation_model);
+        $c->send($message);
       } elsif ($data->{type} eq 'ping') {
         # Responder a ping
         $c->send({json => {type => 'pong', timestamp => time}});
@@ -142,6 +151,24 @@ sub chat {
       }
     };
     if ($@) {
+      my $error = $@;
+  
+      # ✅ Obtener stacktrace
+      use Carp;
+      my $stacktrace = Carp::longmess($error);
+      
+      # ✅ Loggear error con stacktrace
+      $c->app->log->error("Error processing WebSocket message: $error");
+      $c->app->log->error("Stacktrace: $stacktrace");
+      
+      # ✅ Enviar error detallado al cliente (solo en desarrollo)
+      my $error_response = {
+        type => 'error',
+        message => 'Internal server error',
+        # En producción, no envíes el stacktrace completo
+        debug => $ENV{MOJO_MODE} eq 'development' ? $stacktrace : 'Check server logs'
+      };
+
       $c->send({json => {error => 'Invalid JSON message'}});
     }
   });

@@ -9,19 +9,19 @@ sub load_routes {
   # Configurar el middleware
   App::Configs::Middlewares->before_all($app);
   
-  $app->routes->get('/')->to('Web#index');
-  $app->routes->get('/welcome')->to('Web#welcome');
-  $app->routes->get('/demo')->to('Web#demo');
-  $app->routes->get('/api/v1/hello')->to('Api#hello');
-  $app->routes->get('/api/v1/tags')->to('Tag#list_all');
+  $app->routes->get('/')->to('WebController#index');
+  $app->routes->get('/welcome')->to('WebController#welcome');
+  $app->routes->get('/demo')->to('WebController#demo');
+  $app->routes->get('/api/v1/hello')->to('ApiController#hello');
+  $app->routes->get('/api/v1/tags')->to('TagController#list_all');
   # session
-  $app->routes->get('/sign-in')->to('Session#login');
-  $app->routes->post('/api/v1/sign-in')->to('Session#sign_in');
+  $app->routes->get('/sign-in')->to('SessionController#login');
+  $app->routes->post('/api/v1/sign-in')->to('SessionController#sign_in');
   # demo
-  $app->routes->get('/chat')->to('Web#chat');
+  $app->routes->get('/chat')->to('WebController#chat');
   # Nueva ruta WebSocket
-  $app->routes->websocket('/ws/demo')->to('Socket#demo');
-  $app->routes->websocket('/ws/chat')->to('Socket#chat');
+  $app->routes->websocket('/ws/demo')->to('SocketController#demo');
+  $app->routes->websocket('/ws/chat')->to('SocketController#chat');
 
   # Ruta catch-all para 404 - DEBE SER LA ÚLTIMA
   $app->routes->any('/*whatever' => sub {

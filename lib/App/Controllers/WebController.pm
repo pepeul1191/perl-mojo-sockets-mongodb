@@ -1,4 +1,4 @@
-package App::Controllers::Web;
+package App::Controllers::WebController;
 use Mojo::Base 'Mojolicious::Controller';
 
 sub index {

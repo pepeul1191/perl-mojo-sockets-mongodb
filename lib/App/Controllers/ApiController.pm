@@ -1,4 +1,4 @@
-package App::Controllers::Api;
+package App::Controllers::ApiController;
 use Mojo::Base 'Mojolicious::Controller';
 
 sub hello {

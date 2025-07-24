@@ -133,9 +133,17 @@ const loadUsers = () => {
 };
 
 const userClick = (event, user) => {
-  console.log(event)
-  console.log(user)
+  //console.log(user)
   document.getElementById("recipientName").innerHTML = user.name;
+
+  if (ws && ws.readyState === WebSocket.OPEN) {
+    const userInfo = JSON.parse(localStorage.getItem('user_info'));
+    ws.send(JSON.stringify({
+      type: 'load_conversation',
+      token: userInfo.token,
+      recipient_id: user.id 
+    }));
+  }
 }
 
 const showUsers = (response) => {
