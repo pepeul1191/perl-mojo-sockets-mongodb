@@ -62,7 +62,7 @@ sub sign_in {
       exp      => time + 3600,  # Expira en 1 hora
       iat      => time,         # Issued at
     },
-    secret => $c->app->config->{app}->{secret} || 'default_secret'
+    secret => $config->{secret} || 'default_secret'
   );
   
   my $token = $jwt->encode;

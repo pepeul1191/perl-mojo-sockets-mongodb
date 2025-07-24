@@ -40,3 +40,18 @@ Dump de variables:
     use Mojo::JSON qw(encode_json);
 
     $c->app->log->debug("Config data: " . encode_json($config));
+
+### Imágenes de PlantUML
+
+Generar UMLs:
+
+    $ chmod +x scripts/render_puml.sh
+    $ scripts/render_puml.sh
+
+---
+
+## Documentación
+
+Diagrama de clases
+
+![Diagrama UML](./docs/pics/class_diagram.png)

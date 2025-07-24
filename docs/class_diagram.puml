@@ -1,0 +1,25 @@
+@startuml
+
+' Definición de clases
+class Conversation {
+  - _id: ObjectId
+  - name: String
+  - description: String
+  - imageUrl: String
+  - userIds: Array<Number>
+  - messages: Array<Message>
+  - created: Datetime 
+  - updated: Datetime
+}
+
+class Message {
+  - _id: ObjectId
+  - senderId: ObjectId
+  - content: String
+  - created: Datetime 
+}
+
+' Relaciones
+Conversation o-- Message
+
+@enduml

@@ -11,15 +11,16 @@ sub load_routes {
   
   $app->routes->get('/')->to('Web#index');
   $app->routes->get('/welcome')->to('Web#welcome');
-  $app->routes->get('/chat')->to('Web#chat');
+  $app->routes->get('/demo')->to('Web#demo');
   $app->routes->get('/api/v1/hello')->to('Api#hello');
   $app->routes->get('/api/v1/tags')->to('Tag#list_all');
   # session
   $app->routes->get('/sign-in')->to('Session#login');
   $app->routes->post('/api/v1/sign-in')->to('Session#sign_in');
   # demo
-  $app->routes->get('/demo')->to('Web#demo');
+  $app->routes->get('/chat')->to('Web#chat');
   # Nueva ruta WebSocket
+  $app->routes->websocket('/ws/demo')->to('Socket#demo');
   $app->routes->websocket('/ws/chat')->to('Socket#chat');
 
   # Ruta catch-all para 404 - DEBE SER LA ÚLTIMA

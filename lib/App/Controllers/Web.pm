@@ -6,9 +6,9 @@ sub index {
   $c->render('site/index', title => 'Inicio');
 }
 
-sub chat {
+sub demo {
   my $c = shift;
-  $c->render('site/chat', title => 'Inicio');
+  $c->render('site/demo', title => 'Inicio');
 }
 
 sub welcome {
@@ -17,9 +17,9 @@ sub welcome {
   $c->render('site/welcome', name => $name, title => 'Bienvenido');
 }
 
-sub demo {
+sub chat {
   my $c = shift;
-  $c->render('site/demo', title => 'Inicio');
+  $c->render('site/chat', title => 'Inicio');
 }
 
 1;

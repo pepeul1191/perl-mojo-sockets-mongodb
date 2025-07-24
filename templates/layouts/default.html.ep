@@ -68,7 +68,7 @@
         
         <nav>
             <%= link_to '🏠 Inicio' => '/' %>
-            <%= link_to '👥 Chat' => '/chat' %>
+            <%= link_to '👥 Chat' => '/demo' %>
             <%= link_to '📊 API' => '/api/v1/hello' %>
         </nav>
         

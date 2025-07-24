@@ -57,7 +57,7 @@
   });
 
   document.getElementById('chatBtn').addEventListener('click', function(e) {
-    window.location.href = '/demo';  
+    window.location.href = '/chat';  
   });
 
   document.getElementById('limpiarBtn').addEventListener('click', function(e) {

@@ -1,207 +1,96 @@
-% layout 'default';
-% title 'Chat WebSocket';
+% layout 'blank';
+% title 'Chat en Vivo';
 
-<div style="max-width: 800px; margin: 0 auto; padding: 20px;">
-    <h1 style="text-align: center; color: #333;">💬 Chat en Tiempo Real</h1>
-    
-    <div style="background: #f8f9fa; border-radius: 10px; padding: 20px; margin: 20px 0;">
-        <h2>Conectando al chat...</h2>
-        <div id="connection-status" style="padding: 10px; background: #fff3cd; border-radius: 5px;">
-            Estado: <span id="status">Desconectado</span>
+% content_for 'head' => begin
+<style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    height: 100vh;
+  }
+  
+  td {
+    border: 1px solid #ccc;
+    vertical-align: top;
+  }
+  
+  .col1 {
+    width: 20%;
+  }
+  
+  .col2 {
+    width: 80%;
+  }
+  
+  .row1 { height: 10%; }
+  .row2 { height: 80%; }
+  .row3 { height: 10%; }
+  
+  /* Opcional: estilos para mejor visualización */
+  .content {
+    padding: 10px;
+  }
+
+  .user:hover{
+    cursor: pointer;
+  }
+</style>
+% end
+
+% content_for 'header' => begin
+  <h1>Chat Demo</h1>
+  <a href="/sign-in">Ir a Login</a>
+  <table>
+    <tr>
+      <!-- Primera columna: 20% del ancho, una sola fila -->
+      <td class="col1">
+        <div class="content">
+          <h3>Conversaciones</h3>
+          <h2 id="flash"></h2>
+          <p>Contenido de la primera columna (20% del ancho)</p>
+          <ul id="userList"></ul>
         </div>
-    </div>
+      </td>
+      
+      <!-- Segunda columna: 80% del ancho, dividida en 3 filas -->
+      <td class="col2">
+        <table style="width: 100%; height: 100%; border-collapse: collapse;">
+          <tr>
+            <td class="row1">
+              <div class="content">
+                <h4 id="recipientName"></h4>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="row2">
+              <div class="content">
+                <h4>Fila 2</h4>
+                <p>Segunda fila de la segunda columna</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="row3">
+              <div class="content">
+                <input type="text" id="inputMessage">
+                <button id="btnSend">Enviar</button>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+% end
 
-    <div id="chat-container" style="display: none;">
-        <div id="messages" style="height: 300px; overflow-y: auto; border: 1px solid #ddd; 
-                  border-radius: 5px; padding: 15px; background: white; margin-bottom: 15px;">
-            <!-- Mensajes aparecerán aquí -->
-        </div>
-        
-        <div style="display: flex; gap: 10px;">
-            <input type="text" id="username" placeholder="Tu nombre" 
-                   style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-            <input type="text" id="message" placeholder="Escribe un mensaje..." 
-                   style="flex: 3; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-            <button id="send-btn" onclick="sendMessage()" 
-                    style="padding: 10px 20px; background: #007cba; color: white; 
-                           border: none; border-radius: 5px; cursor: pointer;">
-                Enviar
-            </button>
-        </div>
-    </div>
+% content_for 'footer' => begin
+  <p>&copy; 2025 Mi App</p>
+% end
 
-    <div style="margin-top: 30px; text-align: center;">
-        <button onclick="connectWebSocket()" 
-                style="padding: 10px 20px; background: #28a745; color: white; 
-                       border: none; border-radius: 5px; cursor: pointer; margin: 5px;">
-            🔌 Conectar Chat
-        </button>
-        <button onclick="disconnectWebSocket()" 
-                style="padding: 10px 20px; background: #dc3545; color: white; 
-                       border: none; border-radius: 5px; cursor: pointer; margin: 5px;">
-            ⚠️ Desconectar
-        </button>
-    </div>
-</div>
+% content_for 'script' => begin
+  <script src="/vendor/mootools/dist/mootools-core.min.js"></script>
+  <script src="/chat.js"></script>
+% end
 
-<script>
-let ws = null;
-
-function connectWebSocket() {
-    if (ws && ws.readyState === WebSocket.OPEN) {
-        addMessage('Ya estás conectado!', 'system');
-        return;
-    }
-
-    // Conectar al endpoint WebSocket
-    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const wsUrl = protocol + '//' + window.location.host + '/ws/chat';
-    
-    ws = new WebSocket(wsUrl);
-    
-    // Actualizar estado de conexión
-    updateStatus('Conectando...', 'warning');
-    
-    ws.onopen = function(event) {
-        console.log('Conectado al WebSocket');
-        updateStatus('🟢 Conectado', 'success');
-        document.getElementById('chat-container').style.display = 'block';
-        addMessage('✅ Conectado al chat en tiempo real!', 'system');
-    };
-    
-    ws.onmessage = function(event) {
-        console.log('Mensaje recibido:', event.data);
-        const data = JSON.parse(event.data);
-        handleMessage(data);
-    };
-    
-    ws.onclose = function(event) {
-        console.log('Desconectado del WebSocket');
-        updateStatus('🔴 Desconectado', 'error');
-        document.getElementById('chat-container').style.display = 'none';
-        addMessage('⚠️ Desconectado del chat', 'system');
-    };
-    
-    ws.onerror = function(error) {
-        console.error('Error WebSocket:', error);
-        updateStatus('❌ Error de conexión', 'error');
-        addMessage('❌ Error de conexión', 'system');
-    };
-}
-
-function disconnectWebSocket() {
-    if (ws) {
-        ws.close();
-        ws = null;
-    }
-}
-
-function sendMessage() {
-    if (!ws || ws.readyState !== WebSocket.OPEN) {
-        alert('Primero debes conectar al chat!');
-        return;
-    }
-    
-    const username = document.getElementById('username').value || 'Anónimo';
-    const message = document.getElementById('message').value;
-    
-    if (!message.trim()) {
-        alert('Escribe un mensaje!');
-        return;
-    }
-    
-    const data = {
-        type: 'message',
-        user: username,
-        message: message,
-        timestamp: Date.now()
-    };
-    
-    ws.send(JSON.stringify(data));
-    document.getElementById('message').value = '';
-}
-
-function handleMessage(data) {
-    switch(data.type) {
-        case 'welcome':
-            addMessage(data.message, 'system');
-            break;
-        case 'broadcast':
-            addMessage(`${data.user}: ${data.message}`, 'user', data.timestamp);
-            break;
-        case 'ack':
-            console.log('Mensaje confirmado:', data.message);
-            break;
-        case 'error':
-            addMessage(`❌ Error: ${data.message}`, 'error');
-            break;
-        case 'pong':
-            addMessage('🏓 Pong recibido!', 'system');
-            break;
-        default:
-            addMessage(`Mensaje desconocido: ${JSON.stringify(data)}`, 'system');
-    }
-}
-
-function addMessage(text, type, timestamp) {
-    const messagesDiv = document.getElementById('messages');
-    const messageDiv = document.createElement('div');
-    
-    // Formatear timestamp
-    let timeStr = '';
-    if (timestamp) {
-        const date = new Date(timestamp * 1000 || timestamp);
-        timeStr = `[${date.toLocaleTimeString()}] `;
-    }
-    
-    messageDiv.innerHTML = `<strong>${timeStr}</strong>${text}`;
-    
-    // Estilos según tipo
-    switch(type) {
-        case 'system':
-            messageDiv.style.color = '#6c757d';
-            messageDiv.style.fontStyle = 'italic';
-            break;
-        case 'error':
-            messageDiv.style.color = '#dc3545';
-            messageDiv.style.fontWeight = 'bold';
-            break;
-        case 'user':
-            messageDiv.style.color = '#007cba';
-            break;
-    }
-    
-    messageDiv.style.marginBottom = '10px';
-    messageDiv.style.padding = '5px';
-    messageDiv.style.borderBottom = '1px solid #eee';
-    
-    messagesDiv.appendChild(messageDiv);
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-}
-
-function updateStatus(text, type) {
-    const statusElement = document.getElementById('status');
-    statusElement.textContent = text;
-    
-    // Colores según tipo
-    statusElement.style.color = {
-        'success': '#28a745',
-        'error': '#dc3545',
-        'warning': '#ffc107'
-    }[type] || '#6c757d';
-}
-
-// Enviar mensaje con Enter
-document.getElementById('message').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-        sendMessage();
-    }
-});
-
-// Ping periódico para mantener conexión viva
-setInterval(() => {
-    if (ws && ws.readyState === WebSocket.OPEN) {
-        ws.send(JSON.stringify({type: 'ping'}));
-    }
-}, 30000); // Cada 30 segundos
-</script>
+Futuro Chat

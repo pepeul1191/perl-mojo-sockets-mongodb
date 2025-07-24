@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "name": "Juan Pérez",
+    "image_url": "https://ui-avatars.com/api/?name=Juan+Pérez&background=0D8ABC&color=fff"
+  },
+  {
+    "id": 2,
+    "name": "María García",
+    "image_url": "https://ui-avatars.com/api/?name=María+García&background=7BC043&color=fff"
+  },
+  {
+    "id": 3,
+    "name": "Carlos López",
+    "image_url": "https://ui-avatars.com/api/?name=Carlos+López&background=EE7600&color=fff"
+  },
+  {
+    "id": 4,
+    "name": "Ana Martínez",
+    "image_url": "https://ui-avatars.com/api/?name=Ana+Martínez&background=FFD700&color=000"
+  },
+  {
+    "id": 5,
+    "name": "Pedro Sánchez",
+    "image_url": "https://ui-avatars.com/api/?name=Pedro+Sánchez&background=9370DB&color=fff"
+  },
+  {
+    "id": 6,
+    "name": "Laura Rodríguez",
+    "image_url": "https://ui-avatars.com/api/?name=Laura+Rodríguez&background=FF6347&color=fff"
+  },
+  {
+    "id": 7,
+    "name": "Miguel Fernández",
+    "image_url": "https://ui-avatars.com/api/?name=Miguel+Fernández&background=4682B4&color=fff"
+  },
+  {
+    "id": 8,
+    "name": "Sofía Ruiz",
+    "image_url": "https://ui-avatars.com/api/?name=Sofía+Ruiz&background=32CD32&color=fff"
+  },
+  {
+    "id": 9,
+    "name": "David Torres",
+    "image_url": "https://ui-avatars.com/api/?name=David+Torres&background=FF69B4&color=fff"
+  },
+  {
+    "id": 10,
+    "name": "Elena Moreno",
+    "image_url": "https://ui-avatars.com/api/?name=Elena+Moreno&background=8A2BE2&color=fff"
+  }
+]
